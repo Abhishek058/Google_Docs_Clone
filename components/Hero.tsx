@@ -36,8 +36,8 @@ export default function Hero() {
   ];
   return (
     <div className="flex flex-col items-center justify-center bg-gray-100 pt-4">
-      <div className="w-full flex items-center justify-between p-4 sm:w-2/3">
-        <h1 className="text-xs sm:text-sm">Start a new document</h1>
+      <div className="w-full flex items-center justify-between p-2 sm:w-2/3">
+        <h1 className="text-xs sm:text-lg">Start a new document</h1>
         <div className="flex items-center">
           <Button className="text-gray-700 text-xs sm:text-sm">
             <h1>Template gallery</h1>
