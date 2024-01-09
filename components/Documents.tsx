@@ -6,7 +6,7 @@ import SortByAlphaOutlinedIcon from "@mui/icons-material/SortByAlphaOutlined";
 export default function Documents() {
   return (
     <div className="w-full p-4">
-      <div className="flex items-center justify-around">
+      <div className="flex items-center justify-around md:text-lg text-xs">
         <h1>Recent Documents</h1>
         <h1>Date Modified</h1>
         <Button className="flex items-center text-gray-500">
