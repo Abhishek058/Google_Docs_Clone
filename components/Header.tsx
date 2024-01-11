@@ -1,10 +1,31 @@
+import React, { useState } from "react";
 import Menu from "@mui/icons-material/Menu";
 import DescriptionIcon from "@mui/icons-material/Description";
-import { Button } from "@mui/material";
+import { Button, Popover, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AppsIcon from "@mui/icons-material/Apps";
 
-export default function Header() {
+interface HeaderProps {
+  user: {
+    photoURL: string;
+    email: string;
+  };
+}
+
+const Header: React.FC<HeaderProps> = ({ user }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
   return (
     <header className="w-full flex items-center justify-between shadow-md px-1">
       <div className="flex items-center">
@@ -23,16 +44,41 @@ export default function Header() {
           className="flex flex-grow outline-none bg-transparent ml-2"
         />
       </div>
+
       <div className="flex items-center mr-4 gap-3">
         <Button className="rounded-full">
           <AppsIcon className="text-gray-500 text-3xl" />
         </Button>
         <img
-          src="https://lh3.googleusercontent.com/ogw/ANLem4ZRiMwS5EAPHvNmHa3ay2op6XaVl3M4D2UxZOc8=s64-c-mo"
+          src={user.photoURL}
           alt="user image"
           className="w-12 h-12 rounded-full cursor-pointer"
+          onClick={handleClick}
         />
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+        >
+          <Typography sx={{ p: 2 }}>
+            {user.email}
+            <Button className="px-10 py-2 m-10 text-md rounded-lg bg-blue-600 hover:bg-blue-500 hover:shadow-2xl hover:scale-105 text-white">
+              Logout
+            </Button>
+          </Typography>
+        </Popover>
       </div>
     </header>
   );
-}
+};
+
+export default Header;
