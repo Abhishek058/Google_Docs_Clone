@@ -6,6 +6,7 @@ import AppsIcon from "@mui/icons-material/Apps";
 import { getAuth, signOut, onAuthStateChanged, User } from "firebase/auth";
 import app from "../app/firebase/firebase";
 import { useState, useEffect } from "react";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 interface HeaderProps {
   user: {
@@ -47,6 +48,17 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      const db = getFirestore(app);
+      if (acc) {
+        const userRef = doc(db, "users", acc.uid);
+        setDoc(
+          userRef,
+          {
+            isLoggedIn: false,
+          },
+          { merge: true }
+        );
+      }
     } catch (err) {
       console.log(err);
     }

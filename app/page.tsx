@@ -11,16 +11,29 @@ import app from "./firebase/firebase";
 import { GoogleAuthProvider } from "firebase/auth";
 import { Button } from "@mui/material";
 import HomeComp from "./HomeComp";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const auth = getAuth(app);
+    const db = getFirestore(app);
     const unsub = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
         setUser(authUser);
         console.log(authUser);
+
+        const userRef = doc(db, "users", authUser.uid);
+        setDoc(
+          userRef,
+          {
+            displayName: authUser.displayName,
+            email: authUser.email,
+            photoURL: authUser.photoURL,
+          },
+          { merge: true }
+        );
       } else {
         setUser(null);
       }
@@ -42,7 +55,7 @@ export default function Home() {
   return (
     <>
       {user ? (
-        <HomeComp user={user}/>
+        <HomeComp user={user} />
       ) : (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
           <img
