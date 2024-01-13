@@ -48,17 +48,6 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      const db = getFirestore(app);
-      if (acc) {
-        const userRef = doc(db, "users", acc.uid);
-        setDoc(
-          userRef,
-          {
-            isLoggedIn: false,
-          },
-          { merge: true }
-        );
-      }
     } catch (err) {
       console.log(err);
     }

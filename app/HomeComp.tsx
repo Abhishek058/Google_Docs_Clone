@@ -1,4 +1,3 @@
-import React from "react";
 import Documents from "@/components/Documents";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -11,7 +10,7 @@ const HomeComp: React.FC<HomeCompProps> = ({ user }) => {
   return (
     <div>
       <Header user={user} />
-      <Hero />
+      <Hero user={user} />
       <Documents />
     </div>
   );
