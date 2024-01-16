@@ -38,6 +38,7 @@ const Hero: React.FC<HeroProps> = ({ user }) => {
 
     setInput("");
     setShowModal(false);
+    window.location.reload();
 
     return () => unsub();
   };

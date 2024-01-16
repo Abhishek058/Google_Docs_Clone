@@ -11,7 +11,7 @@ const HomeComp: React.FC<HomeCompProps> = ({ user }) => {
     <div>
       <Header user={user} />
       <Hero user={user} />
-      <Documents />
+      <Documents user={user} />
     </div>
   );
 };
