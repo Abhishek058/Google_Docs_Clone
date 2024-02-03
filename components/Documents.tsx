@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
 import SortByAlphaOutlinedIcon from "@mui/icons-material/SortByAlphaOutlined";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -13,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { MoreVert } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
 interface DocumentProps {
   user: {
@@ -21,12 +21,15 @@ interface DocumentProps {
 }
 
 interface Document {
+  documentID: string;
   fileName: string;
   formattedTimestamp: Date;
 }
 
 const Documents: React.FC<DocumentProps> = ({ user }) => {
   const [documents, setDocuments] = useState<Document[]>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     const db = getFirestore(app);
@@ -44,9 +47,11 @@ const Documents: React.FC<DocumentProps> = ({ user }) => {
             timeStamp: Timestamp;
           };
           const formattedTimestamp = timeStamp.toDate();
-          newDocuments.push({ fileName, formattedTimestamp });
+          const documentID = doc.id;
+          newDocuments.push({ documentID, fileName, formattedTimestamp });
         }
       });
+      newDocuments.sort((a, b) => b.formattedTimestamp.getTime() - a.formattedTimestamp.getTime());
 
       setDocuments(newDocuments);
     };
@@ -73,13 +78,19 @@ const Documents: React.FC<DocumentProps> = ({ user }) => {
           </tr>
         </thead>
         <tbody>
-          {documents.map((doc, index) => {
+          {documents.map((doc) => {
             return (
-              <tr className="hover:bg-gray-100 hover:cursor-pointer" key={index}>
+              <tr
+                className="hover:bg-gray-100 hover:cursor-pointer"
+                key={doc.documentID}
+                onClick={() => router.push(`/doc/${doc.documentID}`)}
+              >
                 <td className="text-right">
                   <ArticleIcon className="text-blue-600" />
                 </td>
-                <td className="text-center">
+                <td
+                  className="text-center"
+                >
                   <h1 className="text-gray-500 font-semibold">
                     {doc.fileName}
                   </h1>
