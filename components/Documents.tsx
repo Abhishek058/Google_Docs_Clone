@@ -12,6 +12,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { MoreVert } from "@mui/icons-material";
 
 interface DocumentProps {
   user: {
@@ -54,38 +55,50 @@ const Documents: React.FC<DocumentProps> = ({ user }) => {
   }, [user.email]);
 
   return (
-    <div className="w-full p-6">
-      <div className="flex items-center  justify-around md:text-lg text-xs">
-        <div className="flex flex-col items-center w-2/3 p-4">
-          <div className="flex justify-between items-center w-full m-4">
-            <ArrowDropDownIcon />
-            <h1 className="">Recent Documents</h1>
-            <h1 className="">Recent Documents</h1>
-          </div>
+    <div className="p-6 flex justify-center">
+      <table className="w-[85%] border-separate border-spacing-y-2">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Recent Document</th>
+            <th>Date Modified</th>
+            <th>
+              <Button className="text-black rounded-full">
+                <SortByAlphaOutlinedIcon className="cursor-pointer" />
+              </Button>
+              <Button className="text-black rounded-full">
+                <FolderOpenOutlinedIcon className="cursor-pointer" />
+              </Button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
           {documents.map((doc, index) => {
             return (
-              <div className="flex items-center justify-between w-full">
-                <ArticleIcon className="text-blue-600" />
-                <h1 className="font-bold" key={index}>
-                  {doc.fileName}
-                </h1>
-                <h1 className="text-gray-500 text-sm" key={index}>
-                  {doc.formattedTimestamp.toLocaleString()}
-                </h1>
-              </div>
+              <tr className="hover:bg-gray-100 hover:cursor-pointer" key={index}>
+                <td className="text-right">
+                  <ArticleIcon className="text-blue-600" />
+                </td>
+                <td className="text-center">
+                  <h1 className="text-gray-500 font-semibold">
+                    {doc.fileName}
+                  </h1>
+                </td>
+                <td className="text-center">
+                  <h1 className="text-gray-400 text-sm">
+                    {doc.formattedTimestamp.toLocaleString()}
+                  </h1>
+                </td>
+                <td className="text-center">
+                  <button className="text-black rounded-full">
+                    <MoreVert className="cursor-pointer" />
+                  </button>
+                </td>
+              </tr>
             );
           })}
-        </div>
-
-        <div>
-          <Button className="text-black w-14 h-14 rounded-full">
-            <SortByAlphaOutlinedIcon className="cursor-pointer" />
-          </Button>
-          <Button className="text-black w-12 h-14 rounded-full">
-            <FolderOpenOutlinedIcon className="cursor-pointer" />
-          </Button>
-        </div>
-      </div>
+        </tbody>
+      </table>
     </div>
   );
 };
