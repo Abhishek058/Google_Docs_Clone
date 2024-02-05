@@ -21,7 +21,7 @@ interface DocumentProps {
 }
 
 interface Document {
-  documentID: string;
+  id: string;
   fileName: string;
   formattedTimestamp: Date;
 }
@@ -47,8 +47,8 @@ const Documents: React.FC<DocumentProps> = ({ user }) => {
             timeStamp: Timestamp;
           };
           const formattedTimestamp = timeStamp.toDate();
-          const documentID = doc.id;
-          newDocuments.push({ documentID, fileName, formattedTimestamp });
+          const id = doc.id;
+          newDocuments.push({ id, fileName, formattedTimestamp });
         }
       });
       newDocuments.sort((a, b) => b.formattedTimestamp.getTime() - a.formattedTimestamp.getTime());
@@ -82,8 +82,8 @@ const Documents: React.FC<DocumentProps> = ({ user }) => {
             return (
               <tr
                 className="hover:bg-gray-100 hover:cursor-pointer"
-                key={doc.documentID}
-                onClick={() => router.push(`/doc/${doc.documentID}`)}
+                key={doc.id}
+                onClick={() => router.push(`/doc/${doc.id}`)}
               >
                 <td className="text-right">
                   <ArticleIcon className="text-blue-600" />
