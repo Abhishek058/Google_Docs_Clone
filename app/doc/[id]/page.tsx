@@ -2,15 +2,26 @@
 
 import React, { useEffect, useState } from "react";
 import useUser from "@/components/useUser";
-import { Description } from "@mui/icons-material";
+import { Chat, Description, History, People } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import { Button, CircularProgress } from "@mui/material";
 import { getFirestore } from "firebase/firestore";
 import app from "@/app/firebase/firebase";
 import { doc } from "firebase/firestore";
 import { useDocumentOnce } from "react-firebase-hooks/firestore";
+import TextEditor from "@/components/TextEditor";
 
 export default function Page({ params }: { params: { id: string } }) {
+  const menuBar = [
+    "File",
+    "Edit",
+    "View",
+    "Insert",
+    "Format",
+    "Tools",
+    "Help",
+    "More",
+  ];
   const user = useUser();
   const router = useRouter();
   const db = getFirestore(app);
@@ -62,12 +73,50 @@ export default function Page({ params }: { params: { id: string } }) {
   if (user) {
     return (
       <div>
-        <header className="flex items-center p-3 pb-1">
+        <header className="flex items-center justify-between p-3 pb-1">
           <span onClick={handleLoginClick} className="cursor-pointer">
-            <Description className="text-4xl text-blue-500" />
+            <Description className="text-5xl text-blue-500" />
           </span>
-          <h1>{snapshot?.data()?.fileName}</h1>
+          <div className="flex-grow">
+            <h1 className="text-xl font-medium text-gray-600 px-2">
+              {snapshot?.data()?.fileName}
+            </h1>
+            <div className="flex items-center gap-x-2 text-sm text-gray-600">
+              {menuBar.map((item, index) => (
+                <p
+                  key={index}
+                  className="hover:bg-gray-200 px-2 rounded-md cursor-pointer transition-all duration-200 ease-in-out"
+                >
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-x-2 ">
+            <div>
+              <Button className="rounded-full">
+                <History className="text-2xl text-gray-600" />
+              </Button>
+              <Button className="rounded-full">
+                <Chat className="text-2xl text-gray-600" />
+              </Button>
+              <Button
+                className="px-5 py-2 rounded-full bg-[#c2e7ff] hover:bg-blue-300 hover:shadow-xl text-black"
+                // onClick={}
+              >
+                <People className="text-lg mr-2" />
+                Share
+              </Button>
+            </div>
+
+            <img
+              src={user.photoURL ?? ""}
+              alt="user image"
+              className="w-12 h-12 rounded-full cursor-pointer"
+            />
+          </div>
         </header>
+        <TextEditor id={params.id} />
       </div>
     );
   }
