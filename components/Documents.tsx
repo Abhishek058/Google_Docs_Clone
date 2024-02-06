@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
 import SortByAlphaOutlinedIcon from "@mui/icons-material/SortByAlphaOutlined";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -68,12 +68,12 @@ const Documents: React.FC<DocumentProps> = ({ user }) => {
             <th>Recent Document</th>
             <th>Date Created</th>
             <th>
-              <Button className="text-black rounded-full">
-                <SortByAlphaOutlinedIcon className="cursor-pointer" />
-              </Button>
-              <Button className="text-black rounded-full">
-                <FolderOpenOutlinedIcon className="cursor-pointer" />
-              </Button>
+              <IconButton className="rounded-full">
+                <SortByAlphaOutlinedIcon className="cursor-pointer text-black" />
+              </IconButton>
+              <IconButton className="rounded-full">
+                <FolderOpenOutlinedIcon className="text-black cursor-pointer" />
+              </IconButton>
             </th>
           </tr>
         </thead>

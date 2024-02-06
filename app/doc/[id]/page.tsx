@@ -11,7 +11,7 @@ import {
   People,
 } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import { Button, CircularProgress, IconButton, TextField } from "@mui/material";
+import { Button, CircularProgress, IconButton } from "@mui/material";
 import { getFirestore, updateDoc } from "firebase/firestore";
 import app from "@/app/firebase/firebase";
 import { doc } from "firebase/firestore";
@@ -158,7 +158,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <Chat className="text-2xl text-gray-600" />
               </IconButton>
               <Button className="px-5 py-2 rounded-full bg-[#c2e7ff] hover:bg-blue-300 hover:shadow-xl text-black">
-                <People className="text-lg mr-2" />
+                <People className="text-lg mr-2 text-black" />
                 Share
               </Button>
             </div>
