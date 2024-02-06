@@ -66,7 +66,7 @@ const Documents: React.FC<DocumentProps> = ({ user }) => {
           <tr>
             <th></th>
             <th>Recent Document</th>
-            <th>Date Modified</th>
+            <th>Date Created</th>
             <th>
               <Button className="text-black rounded-full">
                 <SortByAlphaOutlinedIcon className="cursor-pointer" />

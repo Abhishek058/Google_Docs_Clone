@@ -2,10 +2,17 @@
 
 import React, { useEffect, useState } from "react";
 import useUser from "@/components/useUser";
-import { Chat, Description, History, People } from "@mui/icons-material";
+import {
+  Chat,
+  Check,
+  Clear,
+  Description,
+  History,
+  People,
+} from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import { Button, CircularProgress } from "@mui/material";
-import { getFirestore } from "firebase/firestore";
+import { Button, CircularProgress, IconButton, TextField } from "@mui/material";
+import { getFirestore, updateDoc } from "firebase/firestore";
 import app from "@/app/firebase/firebase";
 import { doc } from "firebase/firestore";
 import { useDocumentOnce } from "react-firebase-hooks/firestore";
@@ -35,12 +42,15 @@ export default function Page({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         if (snapshot) {
-          await snapshot.data();
+          const data = await snapshot.data();
           if (snapshot.exists() || !user) {
             setLoading(false);
           }
           if (!snapshot.exists() && user) {
             setLoading(false);
+          }
+          if (data) {
+            setTitle(data.fileName || "");
           }
         }
       } catch (error) {
@@ -50,6 +60,30 @@ export default function Page({ params }: { params: { id: string } }) {
     };
     fetchData();
   }, [snapshot, user, params.id]);
+
+  const [editingTitle, setEditingTitle] = useState(false);
+
+  const [title, setTitle] = useState(snapshot?.data()?.fileName);
+  const handleTitleEditStart = () => {
+    setEditingTitle(true);
+  };
+
+  const handleTitleEditSave = async () => {
+    try {
+      await updateDoc(doc(db, `userDocs/${userEmail}/docs/${params.id}`), {
+        fileName: title,
+      });
+
+      setEditingTitle(false);
+    } catch (error) {
+      console.error("Error updating document title:", error);
+    }
+  };
+
+  const handleTitleEditCancel = () => {
+    setEditingTitle(false);
+    setTitle(snapshot?.data()?.fileName || "");
+  };
 
   const handleLoginClick = () => {
     router.push("/");
@@ -78,9 +112,32 @@ export default function Page({ params }: { params: { id: string } }) {
             <Description className="text-5xl text-blue-500" />
           </span>
           <div className="flex-grow">
-            <h1 className="text-xl font-medium text-gray-600 px-2">
-              {snapshot?.data()?.fileName}
-            </h1>
+            {editingTitle ? (
+              <div className="flex items-center gap-x-2">
+                <input
+                  value={title}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setTitle(e.target.value)
+                  }
+                  className="mx-2 px-2 rounded-md border border-gray-300"
+                />
+                <IconButton onClick={handleTitleEditSave}>
+                  <Check />
+                </IconButton>
+                <IconButton onClick={handleTitleEditCancel}>
+                  <Clear />
+                </IconButton>
+              </div>
+            ) : (
+              <>
+                <h1
+                  className="text-xl font-medium text-gray-600 px-2 cursor-pointer"
+                  onClick={handleTitleEditStart}
+                >
+                  {title}
+                </h1>
+              </>
+            )}
             <div className="flex items-center gap-x-2 text-sm text-gray-600">
               {menuBar.map((item, index) => (
                 <p
@@ -92,18 +149,15 @@ export default function Page({ params }: { params: { id: string } }) {
               ))}
             </div>
           </div>
-          <div className="flex items-center gap-x-2 ">
-            <div>
-              <Button className="rounded-full">
+          <div className="flex items-center gap-x-3">
+            <div className="flex justify-center items-center">
+              <IconButton className="rounded-full">
                 <History className="text-2xl text-gray-600" />
-              </Button>
-              <Button className="rounded-full">
+              </IconButton>
+              <IconButton className="rounded-full">
                 <Chat className="text-2xl text-gray-600" />
-              </Button>
-              <Button
-                className="px-5 py-2 rounded-full bg-[#c2e7ff] hover:bg-blue-300 hover:shadow-xl text-black"
-                // onClick={}
-              >
+              </IconButton>
+              <Button className="px-5 py-2 rounded-full bg-[#c2e7ff] hover:bg-blue-300 hover:shadow-xl text-black">
                 <People className="text-lg mr-2" />
                 Share
               </Button>

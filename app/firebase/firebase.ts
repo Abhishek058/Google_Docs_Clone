@@ -10,12 +10,12 @@ interface FirebaseConfig {
 }
 
 const firebaseConfig: FirebaseConfig = {
-  apiKey: "AIzaSyA__HiIVHE0b5_WA6e87Ie8h4agwebdPrU",
-  authDomain: "docs-clone-f048d.firebaseapp.com",
-  projectId: "docs-clone-f048d",
-  storageBucket: "docs-clone-f048d.appspot.com",
-  messagingSenderId: "1036169296490",
-  appId: "1:1036169296490:web:99413f5d77ab15676a2813",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET!,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID!,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
 };
 
 const app = initializeApp(firebaseConfig);
