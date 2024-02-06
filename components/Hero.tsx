@@ -107,7 +107,7 @@ const Hero: React.FC<HeroProps> = ({ user }) => {
       <div className="w-full flex items-center justify-between p-2 sm:w-2/3">
         <h1 className="text-xs sm:text-lg">Start a new document</h1>
         <div className="flex items-center">
-          <Button className="text-gray-700 text-xs sm:text-sm">
+          <Button className="!text-gray-700 !text-xs !sm:text-sm">
             <h1>Template gallery</h1>
             <UnfoldMoreIcon />
           </Button>

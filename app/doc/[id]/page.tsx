@@ -92,7 +92,7 @@ export default function Page({ params }: { params: { id: string } }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <CircularProgress className="text-4xl" />
+        <CircularProgress className="!text-4xl" />
       </div>
     );
   }
@@ -109,7 +109,7 @@ export default function Page({ params }: { params: { id: string } }) {
       <div>
         <header className="flex items-center justify-between p-3 pb-1">
           <span onClick={handleLoginClick} className="cursor-pointer">
-            <Description className="text-5xl text-blue-500" />
+            <Description className="!text-5xl !text-blue-500" />
           </span>
           <div className="flex-grow">
             {editingTitle ? (
@@ -157,7 +157,7 @@ export default function Page({ params }: { params: { id: string } }) {
               <IconButton className="rounded-full">
                 <Chat className="text-2xl text-gray-600" />
               </IconButton>
-              <Button className="px-5 py-2 rounded-full bg-[#c2e7ff] hover:bg-blue-300 hover:shadow-xl text-black">
+              <Button className="!px-5 !py-2 !rounded-full !bg-[#c2e7ff] !hover:bg-blue-300 hover:shadow-xl !text-black">
                 <People className="text-lg mr-2 text-black" />
                 Share
               </Button>

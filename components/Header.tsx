@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   return (
     <header className="w-full flex items-center justify-between shadow-md px-1 py-2">
       <div className="flex items-center">
-        <Button className="rounded-full !my-4">
+        <Button className="!rounded-full !my-4">
           <Menu className="text-black md:text-3xl" />
         </Button>
         <DescriptionIcon className="text-blue-500 !text-4xl !md:text-5xl" />
@@ -70,8 +70,8 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
         />
       </div>
       <div className="flex items-center mr-4 gap-3">
-        <Button className="rounded-full">
-          <AppsIcon className="text-gray-500 text-3xl" />
+        <Button className="!rounded-full">
+          <AppsIcon className="text-gray-500 !text-3xl" />
         </Button>
         <img
           src={user.photoURL}
