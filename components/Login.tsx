@@ -23,7 +23,7 @@ export default function Login() {
         alt="Google Docs Logo"
       />
       <Button
-        className="px-10 py-2 m-5 text-xl rounded-lg bg-blue-500 hover:bg-blue-400 text-white"
+        className="!px-10 !py-2 !m-5 !text-xl !rounded-lg !bg-blue-500 !hover:bg-blue-400 !text-white"
         onClick={signInWithGoogle}
       >
         Log In
