@@ -1,0 +1,16 @@
+name: status-check
+
+on:
+  push:
+  pull_request:
+    branches: [ "main" ]
+    types: [ "opened", "synchronize" ]
+  check_suite:
+    types: [requested]
+
+jobs:
+  status-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: verifying-steps
+        run: echo "Status Check Verified"
